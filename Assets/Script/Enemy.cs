@@ -6,6 +6,7 @@ public class Enemy : MonoBehaviour
     [Header("Stats")]
     public float speed = 1f;
     public float maxHP = 5f;
+    public int Dropmoney = 20;
     public float currentHP;
 
     [Header("Attack")]
@@ -92,6 +93,7 @@ public class Enemy : MonoBehaviour
     IEnumerator Die()
     {
         animator.SetBool("Death_b", true);
+        GameManager.instance.AddMoney(Dropmoney);
         yield return new WaitForSeconds(1f);
         Destroy(gameObject);
     }

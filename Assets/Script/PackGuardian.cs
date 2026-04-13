@@ -1,21 +1,14 @@
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 public class PackGuardian : MonoBehaviour
 {
     public GameObject GuardianPrefab;
+    public GameObject selectedGuardian;
     public LayerMask tileLayer;
-
-    private Tile myTile;
-
-    public void SetTile(Tile tile)
-    {
-        myTile = tile;
-    }
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (selectedGuardian != null && Input.GetMouseButtonDown(0))
         {
             PlaceGuardian();
         }
@@ -31,21 +24,31 @@ public class PackGuardian : MonoBehaviour
 
             if (tile != null && !tile.isOccupied)
             {
-                // 🔥 1. สร้าง Guardian
-                GameObject Guardian = Instantiate(
-                    GuardianPrefab,
-                    hit.collider.transform.position + Vector3.up * 0.5f,
-                    Quaternion.identity
-                );
+                Guardian gData = selectedGuardian.GetComponent<Guardian>();
+                int cost = gData.cost;
 
-                // 🔥 2. ล็อคช่อง
-                tile.isOccupied = true;
-
-                // 🔥 3. ใส่ตรงนี้ 👇 (สำคัญมาก)
-                Guardian g = Guardian.GetComponent<Guardian>();
-                if (g != null)
+                if (GameManager.instance.SpendMoney(cost))
                 {
-                    g.SetTile(tile);
+                    GameObject plant = Instantiate(
+                        selectedGuardian,
+                        hit.collider.transform.position + Vector3.up * 0.5f,
+                        Quaternion.identity
+                    );
+
+                    tile.isOccupied = true;
+
+                    Guardian g = plant.GetComponent<Guardian>();
+                    if (g != null)
+                    {
+                        g.SetTile(tile);
+                    }
+
+                    // 🔥 วางเสร็จ → ยกเลิกโหมด
+                    selectedGuardian = null;
+                }
+                else
+                {
+                    Debug.Log("Not enough money!");
                 }
             }
         }

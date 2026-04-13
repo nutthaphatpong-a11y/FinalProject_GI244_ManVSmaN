@@ -3,7 +3,7 @@ using UnityEngine;
 public class Guardian : MonoBehaviour
 {
     public float hp = 5f;
-
+    public int cost = 50;
     [Header("Attack")]
     public GameObject bulletPrefab;
     public Transform firePoint;

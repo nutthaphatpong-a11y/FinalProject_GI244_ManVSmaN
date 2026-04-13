@@ -137,8 +137,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a48fa1e2ba427d0419388118c649ac33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
-  maxHP: 5
+  speed: 2
+  maxHP: 10
+  Dropmoney: 20
   currentHP: 0
   attackDamage: 1
   attackRate: 1
@@ -189,8 +190,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 3.5192568, z: 1}
-  m_Center: {x: 0, y: 1.2596287, z: 0}
+  m_Size: {x: 1, y: 3.519257, z: 1.0343072}
+  m_Center: {x: -3.5900627e-15, y: 1.2596287, z: 0.35320503}
 --- !u!1 &764629124387326684
 GameObject:
   m_ObjectHideFlags: 0

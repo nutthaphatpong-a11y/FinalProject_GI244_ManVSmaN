@@ -248,7 +248,7 @@ GameObject:
   - component: {fileID: 3628887981702289262}
   - component: {fileID: 4421400988943392468}
   m_Layer: 0
-  m_Name: Character
+  m_Name: Character 1
   m_TagString: Guardian
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -332,10 +332,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 10
-  cost: 50
+  cost: 25
   bulletPrefab: {fileID: 8494701549665635429, guid: 2a433062bb159044bbafd00c98160a34, type: 3}
   firePoint: {fileID: 1683159843830658357}
-  fireRate: 0.5
+  fireRate: 1
   attackRange: 10
   enemyLayer:
     serializedVersion: 2
@@ -465,7 +465,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100356, guid: 2f8d00bf5057f624e949aef802595da9, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 101648, guid: 2f8d00bf5057f624e949aef802595da9, type: 3}
       propertyPath: m_IsActive
@@ -477,7 +477,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 140800, guid: 2f8d00bf5057f624e949aef802595da9, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 172620, guid: 2f8d00bf5057f624e949aef802595da9, type: 3}
       propertyPath: m_IsActive
