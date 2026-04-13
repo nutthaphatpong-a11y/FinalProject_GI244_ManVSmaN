@@ -248,7 +248,7 @@ GameObject:
   - component: {fileID: 3628887981702289262}
   - component: {fileID: 4421400988943392468}
   m_Layer: 0
-  m_Name: Character 1
+  m_Name: Guardian_1
   m_TagString: Guardian
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

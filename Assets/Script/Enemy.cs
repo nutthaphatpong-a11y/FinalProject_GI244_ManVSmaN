@@ -94,7 +94,8 @@ public class Enemy : MonoBehaviour
     {
         animator.SetBool("Death_b", true);
         GameManager.instance.AddMoney(Dropmoney);
-        yield return new WaitForSeconds(1f);
+        //gameObject.GetComponent<BoxCollider>(). = false;
+        yield return new WaitForSeconds(0.5f);
         Destroy(gameObject);
     }
 

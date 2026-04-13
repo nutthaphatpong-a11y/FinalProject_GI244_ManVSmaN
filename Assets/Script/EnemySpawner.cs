@@ -13,13 +13,16 @@ public class EnemySpawner : MonoBehaviour
 
     IEnumerator SpawnWave()
     {
+        yield return new WaitForSeconds(3f);
+
         while (true)
         {
+
             Transform spawn = spawnPoints[Random.Range(0, spawnPoints.Length)];
 
             Instantiate(enemyPrefab, spawn.position, Quaternion.identity);
 
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(3f);
         }
     }
 }
