@@ -9,6 +9,6 @@ public class UIManager : MonoBehaviour
 
     void Update()
     {
-        moneyText.text = "Money: " + GameManager.instance.money;
+        moneyText.text = "" + GameManager.instance.money;
     }
 }

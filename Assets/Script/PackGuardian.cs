@@ -43,7 +43,7 @@ public class PackGuardian : MonoBehaviour
                         g.SetTile(tile);
                     }
 
-                    // 🔥 วางเสร็จ → ยกเลิกโหมด
+                    
                     selectedGuardian = null;
                 }
                 else

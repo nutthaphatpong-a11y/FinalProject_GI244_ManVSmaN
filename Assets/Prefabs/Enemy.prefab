@@ -137,8 +137,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a48fa1e2ba427d0419388118c649ac33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 2
-  maxHP: 10
+  speed: 1.5
+  maxHP: 5
   Dropmoney: 20
   currentHP: 0
   attackDamage: 1

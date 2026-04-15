@@ -332,11 +332,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 10
-  cost: 25
+  cost: 30
   bulletPrefab: {fileID: 8494701549665635429, guid: 2a433062bb159044bbafd00c98160a34, type: 3}
   firePoint: {fileID: 1683159843830658357}
+  damage: 2
   fireRate: 1
-  attackRange: 10
+  attackRange: 8
   enemyLayer:
     serializedVersion: 2
     m_Bits: 128

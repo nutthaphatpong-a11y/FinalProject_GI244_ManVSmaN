@@ -56,7 +56,7 @@ public class Enemy : MonoBehaviour
         
         if (direction != Vector3.zero)
         {
-            transform.rotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Euler(0, -90, 0);
         }
 
         transform.Translate(direction * speed * Time.deltaTime, Space.World);
@@ -84,26 +84,27 @@ public class Enemy : MonoBehaviour
 
         if (currentHP <= 0)
         {
-            animator.SetBool("Death_b", true);
-            StartCoroutine(Die());
+            //animator.SetBool("Death_b", true);
+            Die();
         }
     }
 
 
-    IEnumerator Die()
-    {
-        animator.SetBool("Death_b", true);
-        GameManager.instance.AddMoney(Dropmoney);
-        //gameObject.GetComponent<BoxCollider>(). = false;
-        yield return new WaitForSeconds(0.5f);
-        Destroy(gameObject);
-    }
-
-    //void Die()
+    //IEnumerator Die()
     //{
+    //    //animator.SetBool("Death_b", true);
+    //    GameManager.instance.AddMoney(Dropmoney);
+        
+    //    yield return new WaitForSeconds(0.5f);
     //    Destroy(gameObject);
-
     //}
+
+    void Die()
+    {
+        GameManager.instance.AddMoney(Dropmoney);
+        Destroy(gameObject);
+
+    }
 
     
     private void OnTriggerEnter(Collider other)

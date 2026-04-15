@@ -3,24 +3,25 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     public float speed = 10f;
-    public float damage = 1f;
+    private float damage;
+
+    public void SetDamage(float dmg)
+    {
+        damage = dmg;
+    }
 
     void Update()
     {
-        transform.Translate(Vector3.right * speed * Time.deltaTime);
+        transform.Translate(Vector3.right * speed * Time.deltaTime, Space.World);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy"))
+        Enemy e = other.GetComponentInParent<Enemy>();
+
+        if (e != null)
         {
-            Enemy e = other.GetComponent<Enemy>();
-
-            if (e != null)
-            {
-                e.TakeDamage(damage);
-            }
-
+            e.TakeDamage(damage);
             Destroy(gameObject);
         }
     }

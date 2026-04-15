@@ -7,6 +7,7 @@ public class Guardian : MonoBehaviour
     [Header("Attack")]
     public GameObject bulletPrefab;
     public Transform firePoint;
+    public float damage = 1f;
     public float fireRate = 1f;
     private float timer;
 
@@ -25,7 +26,7 @@ public class Guardian : MonoBehaviour
     {
         timer += Time.deltaTime;
 
-        // 🔥 ยิงเฉพาะเมื่อมีศัตรูในเลน
+        
         if (timer >= fireRate && HasEnemyInLane())
         {
             Shoot();
@@ -40,7 +41,7 @@ public class Guardian : MonoBehaviour
 
         if (Physics.Raycast(ray, out RaycastHit hit, attackRange, enemyLayer))
         {
-            return true; // มีศัตรูข้างหน้า
+            return true;
         }
 
         return false;
@@ -48,7 +49,18 @@ public class Guardian : MonoBehaviour
 
     void Shoot()
     {
-        Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        GameObject bullet = Instantiate(
+            bulletPrefab,
+            firePoint.position,
+            firePoint.rotation
+        );
+
+        Bullet b = bullet.GetComponent<Bullet>();
+
+        if (b != null)
+        {
+            b.SetDamage(damage);
+        }
     }
 
     public void SetTile(Tile tile)
