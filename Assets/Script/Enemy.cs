@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Enemy : MonoBehaviour
 {
@@ -17,6 +18,9 @@ public class Enemy : MonoBehaviour
     private bool isAttacking = false;
     public Animator animator;
     private Guardian target;
+
+    public GameObject powerUpPrefab;
+    public float dropChance = 0.3f;
 
     void Start()
     {
@@ -103,7 +107,10 @@ public class Enemy : MonoBehaviour
     {
         GameManager.instance.AddMoney(Dropmoney);
         Destroy(gameObject);
-
+        if (Random.value < dropChance)
+        {
+            Instantiate(powerUpPrefab, transform.position, Quaternion.identity);
+        }
     }
 
     
@@ -124,4 +131,5 @@ public class Enemy : MonoBehaviour
             target = null;
         }
     }
+
 }

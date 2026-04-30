@@ -5215,6 +5215,8 @@ MonoBehaviour:
   attackDamage: 1
   attackRate: 1
   animator: {fileID: 0}
+  powerUpPrefab: {fileID: 7352194740683114612, guid: 7d6ac40f61bae704eb9bec9bba810dac, type: 3}
+  dropChance: 0.3
 --- !u!65 &7276638441553307728
 BoxCollider:
   m_ObjectHideFlags: 0

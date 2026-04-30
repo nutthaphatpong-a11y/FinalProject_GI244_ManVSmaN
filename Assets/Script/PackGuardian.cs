@@ -20,6 +20,8 @@ public class PackGuardian : MonoBehaviour
     public GameObject previewPrefab;
     private GameObject previewInstance;
 
+
+
     void Start()
     {
         if (previewPrefab != null)
@@ -44,9 +46,8 @@ public class PackGuardian : MonoBehaviour
         }
     }
 
-    // =========================
-    // 🟢 PLACE GUARDIAN
-    // =========================
+    
+    // PLACE GUARDIAN
     void TryPlaceGuardian()
     {
         if (!TryGetTileUnderMouse(out Tile tile)) return;
@@ -56,13 +57,13 @@ public class PackGuardian : MonoBehaviour
 
         if (!CanPlace(tile, data))
         {
-            Debug.Log("❌ วางไม่ได้ (ช่องไม่ว่าง)");
+            Debug.Log("วางไม่ได้ (ช่องไม่ว่าง)");
             return;
         }
 
         if (!GameManager.instance.SpendMoney(data.cost))
         {
-            Debug.Log("💸 เงินไม่พอ");
+            Debug.Log("เงินไม่พอ");
             return;
         }
 
@@ -72,11 +73,12 @@ public class PackGuardian : MonoBehaviour
 
         OccupyTiles(tile, data);
         guardian.GetComponent<Guardian>().SetTile(tile);
+
+        // 🔥 เพิ่มตรงนี้
+        selectedGuardian = null;
     }
 
-    // =========================
-    // 🔴 REMOVE GUARDIAN
-    // =========================
+    //REMOVE GUARDIAN
     void TryRemoveGuardian()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -102,9 +104,8 @@ public class PackGuardian : MonoBehaviour
         }
     }
 
-    // =========================
-    // 📍 POSITIONING
-    // =========================
+    
+     //POSITIONING
     Vector3 GetPlacementPosition(Tile startTile, Guardian data)
     {
         Vector3 center = GetCenterPosition(startTile, data);
@@ -120,13 +121,19 @@ public class PackGuardian : MonoBehaviour
 
     Vector3 GetCenterPosition(Tile startTile, Guardian data)
     {
-        Tile endTile = GridManager.instance.GetTile(
-            startTile.x + data.sizeX - 1,
-            startTile.z + data.sizeZ - 1
-        );
+        if (startTile == null || data == null || GridManager.instance == null)
+            return Vector3.zero;
 
+        int endX = startTile.x + data.sizeX - 1;
+        int endZ = startTile.z + data.sizeZ - 1;
+
+        Tile endTile = GridManager.instance.GetTile(endX, endZ);
+
+        
         if (endTile == null)
+        {
             return startTile.transform.position;
+        }
 
         return (startTile.transform.position + endTile.transform.position) / 2f;
     }
@@ -149,18 +156,23 @@ public class PackGuardian : MonoBehaviour
         return r != null ? r.bounds.extents.y : 0.5f;
     }
 
-    // =========================
-    // 🧠 LOGIC
-    // =========================
+    // LOGIC
     bool CanPlace(Tile startTile, Guardian data)
     {
         for (int x = 0; x < data.sizeX; x++)
         {
             for (int z = 0; z < data.sizeZ; z++)
             {
-                Tile tile = GridManager.instance.GetTile(startTile.x + x, startTile.z + z);
+                Tile t = GridManager.instance.GetTile(startTile.x + x, startTile.z + z);
 
-                if (tile == null || tile.isOccupied)
+                // 🔥 เพิ่ม debug
+                if (t == null)
+                {
+                    Debug.Log("❌ Out of grid!");
+                    return false;
+                }
+
+                if (t.isOccupied)
                     return false;
             }
         }
@@ -182,9 +194,6 @@ public class PackGuardian : MonoBehaviour
         }
     }
 
-    // =========================
-    // 🎯 RAYCAST HELPER
-    // =========================
     bool TryGetTileUnderMouse(out Tile tile)
     {
         tile = null;
@@ -200,9 +209,7 @@ public class PackGuardian : MonoBehaviour
         return false;
     }
 
-    // =========================
     // 👁 PREVIEW
-    // =========================
     void UpdatePreview()
     {
         if (previewInstance == null) return;

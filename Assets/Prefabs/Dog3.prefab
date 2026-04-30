@@ -4290,6 +4290,8 @@ MonoBehaviour:
   attackDamage: 2
   attackRate: 1
   animator: {fileID: 0}
+  powerUpPrefab: {fileID: 7352194740683114612, guid: dbfe61d88571c5148b4747d7eb4bc93b, type: 3}
+  dropChance: 0.3
 --- !u!1 &4935865657892714113
 GameObject:
   m_ObjectHideFlags: 0

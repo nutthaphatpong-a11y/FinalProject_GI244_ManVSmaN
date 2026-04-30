@@ -13,6 +13,7 @@ public class Bullet : MonoBehaviour
     void Update()
     {
         transform.Translate(Vector3.right * speed * Time.deltaTime, Space.World);
+        CheckOutOfBounds();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -22,6 +23,14 @@ public class Bullet : MonoBehaviour
         if (e != null)
         {
             e.TakeDamage(damage);
+            Destroy(gameObject);
+        }
+    }
+
+    void CheckOutOfBounds()
+    {
+        if (transform.position.x > 13f)
+        {
             Destroy(gameObject);
         }
     }

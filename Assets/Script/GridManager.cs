@@ -13,6 +13,7 @@ public class GridManager : MonoBehaviour
 
     public Tile[,] grid;
 
+
     void Awake()
     {
         instance = this;
@@ -47,7 +48,7 @@ public class GridManager : MonoBehaviour
 
     public Tile GetTile(int x, int z)
     {
-        if (x < 0 || z < 0 || x >= width || z >= height)
+        if (x < 0 || x >= width || z < 0 || z >= height)
             return null;
 
         return grid[x, z];

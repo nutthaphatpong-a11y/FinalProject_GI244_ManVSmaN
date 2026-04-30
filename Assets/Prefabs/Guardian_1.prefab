@@ -337,14 +337,14 @@ MonoBehaviour:
   firePoint: {fileID: 1683159843830658357}
   damage: 2
   fireRate: 1
+  attackRange: 8
   sizeX: 1
   sizeZ: 1
-  attackRange: 8
   enemyLayer:
     serializedVersion: 2
     m_Bits: 128
-  weaponTypeParameter: WeaponType_int
   anim: {fileID: 4917792144935692382}
+  weaponTypeParameter: WeaponType_int
 --- !u!1 &7133734775544647176
 GameObject:
   m_ObjectHideFlags: 0
