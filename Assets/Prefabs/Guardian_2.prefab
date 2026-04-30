@@ -332,19 +332,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 7
-  cost: 50
+  cost: 75
   bulletPrefab: {fileID: 8494701549665635429, guid: 2a433062bb159044bbafd00c98160a34, type: 3}
   firePoint: {fileID: 1683159843830658357}
   damage: 3
   fireRate: 0.25
+  attackRange: 12
   sizeX: 1
   sizeZ: 1
-  attackRange: 12
   enemyLayer:
     serializedVersion: 2
     m_Bits: 128
-  weaponTypeParameter: WeaponType_int
   anim: {fileID: 4917792144935692382}
+  weaponTypeParameter: WeaponType_int
 --- !u!1 &7133734775544647176
 GameObject:
   m_ObjectHideFlags: 0
