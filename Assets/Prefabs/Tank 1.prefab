@@ -246,7 +246,6 @@ GameObject:
   - component: {fileID: 9043056923246037587}
   - component: {fileID: 787577246386207036}
   - component: {fileID: 3628887981702289262}
-  - component: {fileID: 4421400988943392468}
   m_Layer: 0
   m_Name: Tank 1
   m_TagString: Guardian
@@ -314,37 +313,11 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &4421400988943392468
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5411383265194010306}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42f2b029375be6645aa52d374f803299, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hp: 25
-  cost: 20
-  bulletPrefab: {fileID: 8494701549665635429, guid: 2a433062bb159044bbafd00c98160a34, type: 3}
-  firePoint: {fileID: 1683159843830658357}
-  damage: 1.5
-  fireRate: 1
-  sizeX: 1
-  sizeZ: 1
-  attackRange: 4
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 128
-  weaponTypeParameter: WeaponType_int
-  anim: {fileID: 4917792144935692382}
 --- !u!1 &7133734775544647176
 GameObject:
   m_ObjectHideFlags: 0
@@ -686,11 +659,6 @@ PrefabInstance:
       addedObject: {fileID: 7227642810783728162}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2f8d00bf5057f624e949aef802595da9, type: 3}
---- !u!95 &4917792144935692382 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 9500000, guid: 2f8d00bf5057f624e949aef802595da9, type: 3}
-  m_PrefabInstance: {fileID: 4917792144943078718}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4917792144943466396 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400034, guid: 2f8d00bf5057f624e949aef802595da9, type: 3}

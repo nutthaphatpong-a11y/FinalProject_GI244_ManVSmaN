@@ -1,14 +1,21 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
-    public int money = 100;
+    public int money;
+    public Text moneyText;
 
     void Awake()
     {
         instance = this;
+    }
+
+    void Start()
+    {
+        UpdateUI();
     }
 
     public bool SpendMoney(int amount)
@@ -16,6 +23,7 @@ public class GameManager : MonoBehaviour
         if (money >= amount)
         {
             money -= amount;
+            UpdateUI();
             return true;
         }
 
@@ -25,5 +33,11 @@ public class GameManager : MonoBehaviour
     public void AddMoney(int amount)
     {
         money += amount;
+        UpdateUI();
+    }
+
+    void UpdateUI()
+    {
+        moneyText.text = money.ToString();
     }
 }

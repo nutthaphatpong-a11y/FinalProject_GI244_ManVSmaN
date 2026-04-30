@@ -52,38 +52,35 @@ public class PackGuardian : MonoBehaviour
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        if (Physics.Raycast(ray, out RaycastHit hit, 100f, tileLayer))
+        if (!Physics.Raycast(ray, out RaycastHit hit, 100f, tileLayer))
+            return;
+
+        Tile tile = hit.collider.GetComponent<Tile>();
+        if (tile == null) return;
+
+        Guardian data = selectedGuardian.GetComponent<Guardian>();
+        if (data == null) return;
+
+        if (!CanPlace(tile, data))
         {
-            Tile tile = hit.collider.GetComponent<Tile>();
-
-            if (tile != null)
-            {
-                Guardian data = selectedGuardian.GetComponent<Guardian>();
-
-                if (CanPlace(tile, data))
-                {
-                    Vector3 pos = GetCenterPosition(tile, data);
-
-                    // 🔥 SNAP ลงพื้นจริง
-                    pos = SnapToGround(pos);
-
-                    // 🔥 กันจม
-                    pos.y += GetHeightOffset(selectedGuardian);
-
-                    Quaternion rot = Quaternion.Euler(0, 90, 0);
-
-                    GameObject g = Instantiate(selectedGuardian, pos, rot);
-
-                    OccupyTiles(tile, data);
-
-                    g.GetComponent<Guardian>().SetTile(tile);
-                }
-                else
-                {
-                    Debug.Log("วางไม่ได้!");
-                }
-            }
+            Debug.Log("วางไม่ได้");
+            return;
         }
+
+        // 💰 เช็คเงินตรงนี้
+        if (!GameManager.instance.SpendMoney(data.cost))
+        {
+            Debug.Log("เงินไม่พอ!");
+            return;
+        }
+
+        Vector3 pos = GetCenterPosition(tile, data);
+
+        GameObject g = Instantiate(selectedGuardian, pos, Quaternion.identity);
+
+        OccupyTiles(tile, data);
+
+        g.GetComponent<Guardian>().SetTile(tile);
     }
 
     // =========================
