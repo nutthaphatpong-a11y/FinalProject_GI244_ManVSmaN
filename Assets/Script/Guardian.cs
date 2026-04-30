@@ -9,6 +9,9 @@ public class Guardian : MonoBehaviour
     public Transform firePoint;
     public float damage = 1f;
     public float fireRate = 1f;
+    [Header("Size")]
+    public int sizeX = 1;
+    public int sizeZ = 1;
     private float timer;
 
     public float attackRange = 10f;
@@ -83,6 +86,21 @@ public class Guardian : MonoBehaviour
         if (myTile != null)
         {
             myTile.isOccupied = false;
+        }
+
+        Destroy(gameObject);
+    }
+    public void RemoveSelf()
+    {
+        for (int x = 0; x < sizeX; x++)
+        {
+            for (int z = 0; z < sizeZ; z++)
+            {
+                Tile t = GridManager.instance.GetTile(myTile.x + x, myTile.z + z);
+
+                if (t != null)
+                    t.isOccupied = false;
+            }
         }
 
         Destroy(gameObject);

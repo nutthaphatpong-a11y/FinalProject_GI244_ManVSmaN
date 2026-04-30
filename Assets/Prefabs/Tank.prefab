@@ -336,7 +336,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 8494701549665635429, guid: 2a433062bb159044bbafd00c98160a34, type: 3}
   firePoint: {fileID: 1683159843830658357}
   damage: 1.5
-  fireRate: 1.5
+  fireRate: 1
   attackRange: 4
   enemyLayer:
     serializedVersion: 2

@@ -9,4 +9,5 @@ public class SelectGuardian : MonoBehaviour
         PackGuardian placer = Object.FindFirstObjectByType<PackGuardian>();
         placer.selectedGuardian = guardianPrefab;
     }
+
 }

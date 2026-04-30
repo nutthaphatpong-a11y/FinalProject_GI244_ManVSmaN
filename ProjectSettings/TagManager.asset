@@ -7,6 +7,8 @@ TagManager:
   - Tile
   - Enemy
   - Guardian
+  - Ememy
+  - Ground
   layers:
   - Default
   - TransparentFX
@@ -17,7 +19,7 @@ TagManager:
   - 
   - Enemy
   - Tile
-  - 
+  - Ground
   - 
   - 
   - 

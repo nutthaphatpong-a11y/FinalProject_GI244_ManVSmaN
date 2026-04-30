@@ -337,6 +337,8 @@ MonoBehaviour:
   firePoint: {fileID: 1683159843830658357}
   damage: 3
   fireRate: 0.25
+  sizeX: 3
+  sizeZ: 3
   attackRange: 12
   enemyLayer:
     serializedVersion: 2
