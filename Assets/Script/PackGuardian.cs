@@ -3,28 +3,28 @@ using UnityEngine.UI;
 
 public class PackGuardian : MonoBehaviour
 {
-    [Header("Select")]
+    [Header("Selection")]
     public GameObject selectedGuardian;
 
-    [Header("Layer")]
+    [Header("Raycast Layers")]
     public LayerMask tileLayer;
-    public LayerMask groundLayer; // 🔥 เพิ่ม
+    public LayerMask groundLayer;
 
-    [Header("Mode")]
+    [Header("Modes")]
     public bool isRemoveMode = false;
 
     [Header("UI")]
-    public Image buttonImage;
+    public Image removeButtonImage;
 
     [Header("Preview")]
     public GameObject previewPrefab;
-    private GameObject previewObj;
+    private GameObject previewInstance;
 
     void Start()
     {
         if (previewPrefab != null)
         {
-            previewObj = Instantiate(previewPrefab);
+            previewInstance = Instantiate(previewPrefab);
         }
     }
 
@@ -32,59 +32,50 @@ public class PackGuardian : MonoBehaviour
     {
         UpdatePreview();
 
-        if (Input.GetMouseButtonDown(0))
+        if (!Input.GetMouseButtonDown(0)) return;
+
+        if (isRemoveMode)
         {
-            if (isRemoveMode)
-            {
-                TryRemoveGuardian();
-            }
-            else if (selectedGuardian != null)
-            {
-                PlaceGuardian();
-            }
+            TryRemoveGuardian();
+        }
+        else if (selectedGuardian != null)
+        {
+            TryPlaceGuardian();
         }
     }
 
     // =========================
-    // 🎯 PLACE
+    // 🟢 PLACE GUARDIAN
     // =========================
-    void PlaceGuardian()
+    void TryPlaceGuardian()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-        if (!Physics.Raycast(ray, out RaycastHit hit, 100f, tileLayer))
-            return;
-
-        Tile tile = hit.collider.GetComponent<Tile>();
-        if (tile == null) return;
+        if (!TryGetTileUnderMouse(out Tile tile)) return;
 
         Guardian data = selectedGuardian.GetComponent<Guardian>();
         if (data == null) return;
 
         if (!CanPlace(tile, data))
         {
-            Debug.Log("วางไม่ได้");
+            Debug.Log("❌ วางไม่ได้ (ช่องไม่ว่าง)");
             return;
         }
 
-        // 💰 เช็คเงินตรงนี้
         if (!GameManager.instance.SpendMoney(data.cost))
         {
-            Debug.Log("เงินไม่พอ!");
+            Debug.Log("💸 เงินไม่พอ");
             return;
         }
 
-        Vector3 pos = GetCenterPosition(tile, data);
+        Vector3 position = GetPlacementPosition(tile, data);
 
-        GameObject g = Instantiate(selectedGuardian, pos, Quaternion.identity);
+        GameObject guardian = Instantiate(selectedGuardian, position, Quaternion.Euler(0, 90, 0));
 
         OccupyTiles(tile, data);
-
-        g.GetComponent<Guardian>().SetTile(tile);
+        guardian.GetComponent<Guardian>().SetTile(tile);
     }
 
     // =========================
-    // ❌ REMOVE
+    // 🔴 REMOVE GUARDIAN
     // =========================
     void TryRemoveGuardian()
     {
@@ -92,11 +83,11 @@ public class PackGuardian : MonoBehaviour
 
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
-            Guardian g = hit.collider.GetComponentInParent<Guardian>();
+            Guardian guardian = hit.collider.GetComponentInParent<Guardian>();
 
-            if (g != null)
+            if (guardian != null)
             {
-                g.RemoveSelf();
+                guardian.RemoveSelf();
             }
         }
     }
@@ -105,13 +96,28 @@ public class PackGuardian : MonoBehaviour
     {
         isRemoveMode = !isRemoveMode;
 
-        if (buttonImage != null)
-            buttonImage.color = isRemoveMode ? Color.red : Color.white;
+        if (removeButtonImage != null)
+        {
+            removeButtonImage.color = isRemoveMode ? Color.red : Color.white;
+        }
     }
 
     // =========================
-    // 📐 CENTER
+    // 📍 POSITIONING
     // =========================
+    Vector3 GetPlacementPosition(Tile startTile, Guardian data)
+    {
+        Vector3 center = GetCenterPosition(startTile, data);
+
+        // snap ลงพื้นจริง
+        center = SnapToGround(center);
+
+        // ยกขึ้นตามขนาด model
+        center.y += GetHeightOffset(selectedGuardian);
+
+        return center;
+    }
+
     Vector3 GetCenterPosition(Tile startTile, Guardian data)
     {
         Tile endTile = GridManager.instance.GetTile(
@@ -119,14 +125,12 @@ public class PackGuardian : MonoBehaviour
             startTile.z + data.sizeZ - 1
         );
 
-        if (endTile == null) return startTile.transform.position;
+        if (endTile == null)
+            return startTile.transform.position;
 
         return (startTile.transform.position + endTile.transform.position) / 2f;
     }
 
-    // =========================
-    // 🔥 SNAP GROUND
-    // =========================
     Vector3 SnapToGround(Vector3 position)
     {
         Ray ray = new Ray(position + Vector3.up * 5f, Vector3.down);
@@ -142,15 +146,11 @@ public class PackGuardian : MonoBehaviour
     float GetHeightOffset(GameObject obj)
     {
         Renderer r = obj.GetComponentInChildren<Renderer>();
-
-        if (r != null)
-            return r.bounds.extents.y;
-
-        return 0.5f;
+        return r != null ? r.bounds.extents.y : 0.5f;
     }
 
     // =========================
-    // 🧠 CHECK
+    // 🧠 LOGIC
     // =========================
     bool CanPlace(Tile startTile, Guardian data)
     {
@@ -158,30 +158,46 @@ public class PackGuardian : MonoBehaviour
         {
             for (int z = 0; z < data.sizeZ; z++)
             {
-                Tile t = GridManager.instance.GetTile(startTile.x + x, startTile.z + z);
+                Tile tile = GridManager.instance.GetTile(startTile.x + x, startTile.z + z);
 
-                if (t == null || t.isOccupied)
+                if (tile == null || tile.isOccupied)
                     return false;
             }
         }
+
         return true;
     }
 
-    // =========================
-    // 🧱 OCCUPY
-    // =========================
     void OccupyTiles(Tile startTile, Guardian data)
     {
         for (int x = 0; x < data.sizeX; x++)
         {
             for (int z = 0; z < data.sizeZ; z++)
             {
-                Tile t = GridManager.instance.GetTile(startTile.x + x, startTile.z + z);
+                Tile tile = GridManager.instance.GetTile(startTile.x + x, startTile.z + z);
 
-                if (t != null)
-                    t.isOccupied = true;
+                if (tile != null)
+                    tile.isOccupied = true;
             }
         }
+    }
+
+    // =========================
+    // 🎯 RAYCAST HELPER
+    // =========================
+    bool TryGetTileUnderMouse(out Tile tile)
+    {
+        tile = null;
+
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        if (Physics.Raycast(ray, out RaycastHit hit, 100f, tileLayer))
+        {
+            tile = hit.collider.GetComponent<Tile>();
+            return tile != null;
+        }
+
+        return false;
     }
 
     // =========================
@@ -189,50 +205,34 @@ public class PackGuardian : MonoBehaviour
     // =========================
     void UpdatePreview()
     {
-        if (previewObj == null)
-            return;
+        if (previewInstance == null) return;
 
         if (selectedGuardian == null || isRemoveMode)
         {
-            previewObj.SetActive(false);
+            previewInstance.SetActive(false);
             return;
         }
 
-        previewObj.SetActive(true);
+        previewInstance.SetActive(true);
 
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (!TryGetTileUnderMouse(out Tile tile)) return;
 
-        if (Physics.Raycast(ray, out RaycastHit hit, 100f, tileLayer))
-        {
-            Tile tile = hit.collider.GetComponent<Tile>();
+        Guardian data = selectedGuardian.GetComponent<Guardian>();
 
-            if (tile != null)
-            {
-                Guardian data = selectedGuardian.GetComponent<Guardian>();
+        Vector3 pos = GetPlacementPosition(tile, data);
+        previewInstance.transform.position = pos;
 
-                Vector3 pos = GetCenterPosition(tile, data);
-
-                // 🔥 SNAP preview ด้วย
-                pos = SnapToGround(pos);
-                pos.y += GetHeightOffset(selectedGuardian);
-
-                previewObj.transform.position = pos;
-
-                bool canPlace = CanPlace(tile, data);
-                SetPreviewColor(canPlace);
-            }
-        }
+        bool canPlace = CanPlace(tile, data);
+        SetPreviewColor(canPlace);
     }
 
     void SetPreviewColor(bool canPlace)
     {
-        Renderer[] rends = previewObj.GetComponentsInChildren<Renderer>();
+        Color color = canPlace ? Color.green : Color.red;
 
-        Color c = canPlace ? Color.green : Color.red;
-
-        foreach (var r in rends)
+        foreach (Renderer r in previewInstance.GetComponentsInChildren<Renderer>())
         {
-            r.material.color = c;
+            r.material.color = color;
         }
     }
 }
