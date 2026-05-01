@@ -9,6 +9,7 @@ TagManager:
   - Guardian
   - Ememy
   - Ground
+  - Base
   layers:
   - Default
   - TransparentFX

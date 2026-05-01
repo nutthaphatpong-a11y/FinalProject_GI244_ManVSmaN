@@ -121,6 +121,17 @@ public class Enemy : MonoBehaviour
             isAttacking = true;
             target = other.GetComponent<Guardian>();
         }
+        else if (other.CompareTag("Base"))
+        {
+            Base baseObj = other.GetComponent<Base>();
+
+            if (baseObj != null)
+            {
+                baseObj.TakeDamage(attackDamage);
+            }
+
+            Destroy(gameObject);
+        }
     }
 
     private void OnTriggerExit(Collider other)
