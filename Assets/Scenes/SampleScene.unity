@@ -3088,7 +3088,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ca447b486de64f4e9a5bf6e4583a419, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHP: 200
+  maxHP: 20
   hpBar: {fileID: 480634979}
   fillImage: {fileID: 2025842124}
 --- !u!1660057539 &9223372036854775807
