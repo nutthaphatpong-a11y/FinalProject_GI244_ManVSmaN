@@ -1,42 +1,62 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class EnemySpawner : MonoBehaviour
 {
     public Transform[] spawnPoints;
-
-    [Header("Wave Settings")]
     public Wave[] waves;
-    public GameObject[] enemyPrefab;
 
-    public float timeCodownWaves = 5f;
+    public float timeBetweenWaves = 5f;
 
     void Start()
     {
-        StartCoroutine(SpawnWave());
+        StartCoroutine(SpawnWaves());
     }
 
-    IEnumerator SpawnWave()
+    IEnumerator SpawnWaves()
     {
         yield return new WaitForSeconds(3f);
 
         for (int w = 0; w < waves.Length; w++)
         {
+            Wave wave = waves[w];
 
-            Wave currentWave = waves[w];
+            Debug.Log("Wave " + (w + 1));
 
+            
+            List<GameObject> spawnList = new List<GameObject>();
 
-            for (int i = 0; i < currentWave.enemyCount; i++)
+            for (int i = 0; i < wave.enemyPrefabs.Length; i++)
             {
-                Transform spawn = spawnPoints[Random.Range(0, spawnPoints.Length)];
-                int enemy = Random.Range(0, enemyPrefab.Length);
-
-                Instantiate(enemyPrefab[enemy], spawn.position, Quaternion.identity);
-
-                yield return new WaitForSeconds(currentWave.spawnDelay);
+                for (int j = 0; j < wave.counts[i]; j++)
+                {
+                    spawnList.Add(wave.enemyPrefabs[i]);
+                }
             }
 
-            yield return new WaitForSeconds(timeCodownWaves);
+            
+            for (int i = 0; i < spawnList.Count; i++)
+            {
+                int rand = Random.Range(0, spawnList.Count);
+
+                GameObject temp = spawnList[i];
+                spawnList[i] = spawnList[rand];
+                spawnList[rand] = temp;
+            }
+
+            
+            foreach (GameObject enemy in spawnList)
+            {
+                Transform spawn = spawnPoints[Random.Range(0, spawnPoints.Length)];
+
+                Instantiate(enemy, spawn.position, Quaternion.identity);
+
+                yield return new WaitForSeconds(wave.spawnDelay);
+            }
+
+            // ⏳ รอเวฟถัดไป
+            yield return new WaitForSeconds(timeBetweenWaves);
         }
 
         Debug.Log("All waves finished!");

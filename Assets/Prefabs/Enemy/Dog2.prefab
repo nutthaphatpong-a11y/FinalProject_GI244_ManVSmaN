@@ -1760,7 +1760,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 2.5
   maxHP: 6
-  Dropmoney: 30
+  Dropmoney: 25
   currentHP: 0
   attackDamage: 2
   attackRate: 1

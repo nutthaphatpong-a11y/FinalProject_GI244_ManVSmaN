@@ -370,7 +370,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -353.16, y: 455}
+  m_AnchoredPosition: {x: -344.16, y: 455}
   m_SizeDelta: {x: 35.675, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &195848066
@@ -646,7 +646,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 446, y: -30}
+  m_AnchoredPosition: {x: 455, y: -30}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &484229930
@@ -1203,21 +1203,21 @@ MonoBehaviour:
   - {fileID: 1388500379}
   - {fileID: 1357812174}
   waves:
-  - enemyCount: 10
-    spawnDelay: 0.5
-  - enemyCount: 10
-    spawnDelay: 0.5
-  - enemyCount: 20
-    spawnDelay: 0.5
-  enemyPrefab:
-  - {fileID: 731254654420710245, guid: 0e7ed18dc3b28064d936094423611a3e, type: 3}
-  - {fileID: 7591800460858037780, guid: 26fb4a3794983844781ecb674ca3474a, type: 3}
-  - {fileID: 1928853565600797406, guid: b363fb019a12f764bb4223e7aeda6e6a, type: 3}
-  - {fileID: 4856339743466158455, guid: ef7037a830d2bff408a015608b81e6e5, type: 3}
-  - {fileID: 731254654420710245, guid: b208cfc5d440e4348925ce6e285a8c53, type: 3}
-  - {fileID: 731254654420710245, guid: 0e7ed18dc3b28064d936094423611a3e, type: 3}
-  - {fileID: 731254654420710245, guid: 0e7ed18dc3b28064d936094423611a3e, type: 3}
-  timeCodownWaves: 5
+  - enemyPrefabs:
+    - {fileID: 731254654420710245, guid: 0e7ed18dc3b28064d936094423611a3e, type: 3}
+    counts: 0a000000
+    spawnDelay: 1
+  - enemyPrefabs:
+    - {fileID: 7591800460858037780, guid: 26fb4a3794983844781ecb674ca3474a, type: 3}
+    - {fileID: 1928853565600797406, guid: b363fb019a12f764bb4223e7aeda6e6a, type: 3}
+    - {fileID: 4856339743466158455, guid: ef7037a830d2bff408a015608b81e6e5, type: 3}
+    counts: 050000000500000005000000
+    spawnDelay: 1
+  - enemyPrefabs:
+    - {fileID: 731254654420710245, guid: b208cfc5d440e4348925ce6e285a8c53, type: 3}
+    counts: 02000000
+    spawnDelay: 3
+  timeBetweenWaves: 7
 --- !u!4 &737104365
 Transform:
   m_ObjectHideFlags: 0
@@ -1675,7 +1675,7 @@ Transform:
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 5.5, y: 7, z: 3}
+  m_LocalPosition: {x: 5.5, y: 7, z: 2.52}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1927,7 +1927,7 @@ GameObject:
   - component: {fileID: 1185708654}
   - component: {fileID: 1185708653}
   m_Layer: 0
-  m_Name: Grid
+  m_Name: GridManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3088,7 +3088,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ca447b486de64f4e9a5bf6e4583a419, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHP: 20
+  maxHP: 200
   hpBar: {fileID: 480634979}
   fillImage: {fileID: 2025842124}
 --- !u!1660057539 &9223372036854775807

@@ -137,12 +137,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a48fa1e2ba427d0419388118c649ac33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1.5
-  maxHP: 5
-  Dropmoney: 20
+  speed: 2
+  maxHP: 100
+  Dropmoney: 0
   currentHP: 0
-  attackDamage: 1
-  attackRate: 1
+  attackDamage: 10
+  attackRate: 2
   animator: {fileID: 9112358799077592444}
   powerUpPrefab: {fileID: 7352194740683114612, guid: dbfe61d88571c5148b4747d7eb4bc93b, type: 3}
   dropChance: 0.3

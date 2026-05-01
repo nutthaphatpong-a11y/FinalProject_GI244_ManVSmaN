@@ -3,9 +3,8 @@ using UnityEngine;
 [System.Serializable]
 public class Wave
 {
+    public GameObject[] enemyPrefabs; // ประเภทศัตรู
+    public int[] counts;              // จำนวนของแต่ละประเภท
 
-    //public GameObject[] enemyPrefab;
-    public int enemyCount;
-
-    public float spawnDelay;
+    public float spawnDelay = 1f;
 }
