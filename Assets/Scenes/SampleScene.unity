@@ -1205,18 +1205,18 @@ MonoBehaviour:
   waves:
   - enemyPrefabs:
     - {fileID: 731254654420710245, guid: 0e7ed18dc3b28064d936094423611a3e, type: 3}
-    counts: 0a000000
+    counts: 0f000000
     spawnDelay: 1
   - enemyPrefabs:
     - {fileID: 7591800460858037780, guid: 26fb4a3794983844781ecb674ca3474a, type: 3}
     - {fileID: 1928853565600797406, guid: b363fb019a12f764bb4223e7aeda6e6a, type: 3}
     - {fileID: 4856339743466158455, guid: ef7037a830d2bff408a015608b81e6e5, type: 3}
-    counts: 050000000500000005000000
-    spawnDelay: 1
+    counts: 050000000700000008000000
+    spawnDelay: 0.5
   - enemyPrefabs:
     - {fileID: 731254654420710245, guid: b208cfc5d440e4348925ce6e285a8c53, type: 3}
-    counts: 02000000
-    spawnDelay: 3
+    counts: 03000000
+    spawnDelay: 5
   timeBetweenWaves: 7
 --- !u!4 &737104365
 Transform:

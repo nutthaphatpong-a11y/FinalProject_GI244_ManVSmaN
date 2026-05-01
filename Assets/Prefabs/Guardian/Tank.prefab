@@ -318,7 +318,7 @@ Rigidbody:
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &4421400988943392468
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -337,14 +337,14 @@ MonoBehaviour:
   firePoint: {fileID: 1683159843830658357}
   damage: 1.5
   fireRate: 1
+  attackRange: 4
   sizeX: 1
   sizeZ: 1
-  attackRange: 4
   enemyLayer:
     serializedVersion: 2
     m_Bits: 128
-  weaponTypeParameter: WeaponType_int
   anim: {fileID: 4917792144935692382}
+  weaponTypeParameter: WeaponType_int
 --- !u!1 &7133734775544647176
 GameObject:
   m_ObjectHideFlags: 0
