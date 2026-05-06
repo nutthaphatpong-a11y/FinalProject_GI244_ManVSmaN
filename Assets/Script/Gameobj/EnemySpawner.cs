@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class EnemySpawner : MonoBehaviour
 {
@@ -13,9 +14,14 @@ public class EnemySpawner : MonoBehaviour
 public TMP_Text waveText;
 void Start()
 {
+Time.timeScale = 1f;
+    Debug.Log("Spawner Start");
     ApplyDifficulty();
     StartCoroutine(SpawnWaves());
+Debug.Log(waves.Length);
+Debug.Log(spawnPoints.Length);
 }
+
 
 IEnumerator SpawnWaves()
 {
@@ -77,7 +83,7 @@ IEnumerator SpawnWaves()
             yield return null;
         }
 
-        yield return new WaitForSeconds(2f);
+        //yield return new WaitForSeconds(2f);
     }
 
     if (waveText != null)
@@ -86,6 +92,7 @@ IEnumerator SpawnWaves()
     }
 
     Debug.Log("All waves finished!");
+SceneManager.LoadScene("Win");
 }
 
 void ApplyDifficulty()

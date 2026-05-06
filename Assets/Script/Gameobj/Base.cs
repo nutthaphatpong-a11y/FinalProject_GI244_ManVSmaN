@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using static UnityEngine.GraphicsBuffer;
+using UnityEngine.SceneManagement;
 
 public class Base : MonoBehaviour
 {
@@ -57,7 +58,8 @@ public class Base : MonoBehaviour
 
     void Die()
     {
-        Debug.Log("Game Over");
+
         Time.timeScale = 0f;
+SceneManager.LoadScene("Lose");
     }
 }
