@@ -44,12 +44,12 @@ public class Guardian : MonoBehaviour
         if (anim != null)
             anim.SetInteger(weaponTypeParameter, 1);
 
-        // เก็บค่า base
+        
         baseDamage = damage;
         baseFireRate = fireRate;
         baseRange = attackRange;
 
-        // เก็บ renderer ทั้งหมด (รองรับหลาย mesh)
+        
         renderers = GetComponentsInChildren<Renderer>();
     }
 
@@ -107,7 +107,7 @@ public class Guardian : MonoBehaviour
         Destroy(gameObject);
     }
 
-    // เคลียร์ช่อง
+    
     void ClearTiles()
     {
         if (myTile == null) return;
@@ -129,7 +129,7 @@ public class Guardian : MonoBehaviour
         myTile = tile;
     }
 
-    // ⚡ POWER UP
+    
     public void ApplyPowerUp(PowerUpType type, float value, float duration)
     {
         StartCoroutine(BuffRoutine(type, value, duration));

@@ -57,7 +57,7 @@ public class PackGuardian : MonoBehaviour
 
         if (!CanPlace(tile, data))
         {
-            Debug.Log("วางไม่ได้ (ช่องไม่ว่าง)");
+            Debug.Log("วางไม่ได้");
             return;
         }
 
@@ -74,8 +74,6 @@ public class PackGuardian : MonoBehaviour
         OccupyTiles(tile, data);
         guardian.GetComponent<Guardian>().SetTile(tile);
 
-        // 🔥 เพิ่มตรงนี้
-        selectedGuardian = null;
     }
 
     //REMOVE GUARDIAN
@@ -165,7 +163,6 @@ public class PackGuardian : MonoBehaviour
             {
                 Tile t = GridManager.instance.GetTile(startTile.x + x, startTile.z + z);
 
-                // 🔥 เพิ่ม debug
                 if (t == null)
                 {
                     Debug.Log("❌ Out of grid!");
@@ -209,7 +206,7 @@ public class PackGuardian : MonoBehaviour
         return false;
     }
 
-    // 👁 PREVIEW
+    // PREVIEW
     void UpdatePreview()
     {
         if (previewInstance == null) return;
@@ -242,4 +239,5 @@ public class PackGuardian : MonoBehaviour
             r.material.color = color;
         }
     }
+
 }

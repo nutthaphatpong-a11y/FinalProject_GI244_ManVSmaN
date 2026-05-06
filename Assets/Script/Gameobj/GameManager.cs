@@ -13,10 +13,11 @@ public class GameManager : MonoBehaviour
         instance = this;
     }
 
-    void Start()
-    {
-        UpdateUI();
-    }
+void Start()
+{
+    money = GameSettings.startMoney;
+    UpdateUI();
+}
 
     public bool SpendMoney(int amount)
     {
