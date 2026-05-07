@@ -20,8 +20,6 @@ public class PackGuardian : MonoBehaviour
     public GameObject previewPrefab;
     private GameObject previewInstance;
 
-
-
     void Start()
     {
         if (previewPrefab != null)
@@ -46,8 +44,6 @@ public class PackGuardian : MonoBehaviour
         }
     }
 
-    
-    // PLACE GUARDIAN
     void TryPlaceGuardian()
     {
         if (!TryGetTileUnderMouse(out Tile tile)) return;
@@ -69,14 +65,20 @@ public class PackGuardian : MonoBehaviour
 
         Vector3 position = GetPlacementPosition(tile, data);
 
-        GameObject guardian = Instantiate(selectedGuardian, position, Quaternion.Euler(0, 90, 0));
+        GameObject guardian = Instantiate(
+            selectedGuardian,
+            position,
+            Quaternion.Euler(0, 90, 0)
+        );
 
         OccupyTiles(tile, data);
         guardian.GetComponent<Guardian>().SetTile(tile);
 
+        // วางครั้งเดียวแล้วยกเลิกเลือก
+        selectedGuardian = null;
+        SelectGuardian.ClearSelection();
     }
 
-    //REMOVE GUARDIAN
     void TryRemoveGuardian()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -91,27 +93,34 @@ public class PackGuardian : MonoBehaviour
             }
         }
     }
+public void ToggleRemoveMode() 
+{ 
+isRemoveMode = !isRemoveMode; 
+if (removeButtonImage != null) 
+{ 
+removeButtonImage.color = isRemoveMode ? Color.red : Color.white; 
+} 
+}
+    //public void ToggleRemoveMode()
+    //{
+        //isRemoveMode = !isRemoveMode;
 
-    public void ToggleRemoveMode()
-    {
-        isRemoveMode = !isRemoveMode;
+        //if (isRemoveMode)
+        //{
+            //selectedGuardian = null;
+            //SelectGuardian.ClearSelection();
+       // }
 
-        if (removeButtonImage != null)
-        {
-            removeButtonImage.color = isRemoveMode ? Color.red : Color.white;
-        }
-    }
+       // if (removeButtonImage != null)
+       // {
+           // removeButtonImage.color = isRemoveMode ? Color.red : Color.white;
+       // }
+    //}
 
-    
-     //POSITIONING
     Vector3 GetPlacementPosition(Tile startTile, Guardian data)
     {
         Vector3 center = GetCenterPosition(startTile, data);
-
-        // snap ลงพื้นจริง
         center = SnapToGround(center);
-
-        // ยกขึ้นตามขนาด model
         center.y += GetHeightOffset(selectedGuardian);
 
         return center;
@@ -119,19 +128,13 @@ public class PackGuardian : MonoBehaviour
 
     Vector3 GetCenterPosition(Tile startTile, Guardian data)
     {
-        if (startTile == null || data == null || GridManager.instance == null)
-            return Vector3.zero;
-
         int endX = startTile.x + data.sizeX - 1;
         int endZ = startTile.z + data.sizeZ - 1;
 
         Tile endTile = GridManager.instance.GetTile(endX, endZ);
 
-        
         if (endTile == null)
-        {
             return startTile.transform.position;
-        }
 
         return (startTile.transform.position + endTile.transform.position) / 2f;
     }
@@ -154,7 +157,6 @@ public class PackGuardian : MonoBehaviour
         return r != null ? r.bounds.extents.y : 0.5f;
     }
 
-    // LOGIC
     bool CanPlace(Tile startTile, Guardian data)
     {
         for (int x = 0; x < data.sizeX; x++)
@@ -163,13 +165,7 @@ public class PackGuardian : MonoBehaviour
             {
                 Tile t = GridManager.instance.GetTile(startTile.x + x, startTile.z + z);
 
-                if (t == null)
-                {
-                    Debug.Log("❌ Out of grid!");
-                    return false;
-                }
-
-                if (t.isOccupied)
+                if (t == null || t.isOccupied)
                     return false;
             }
         }
@@ -206,7 +202,6 @@ public class PackGuardian : MonoBehaviour
         return false;
     }
 
-    // PREVIEW
     void UpdatePreview()
     {
         if (previewInstance == null) return;
@@ -226,8 +221,7 @@ public class PackGuardian : MonoBehaviour
         Vector3 pos = GetPlacementPosition(tile, data);
         previewInstance.transform.position = pos;
 
-        bool canPlace = CanPlace(tile, data);
-        SetPreviewColor(canPlace);
+        SetPreviewColor(CanPlace(tile, data));
     }
 
     void SetPreviewColor(bool canPlace)
@@ -239,5 +233,4 @@ public class PackGuardian : MonoBehaviour
             r.material.color = color;
         }
     }
-
 }

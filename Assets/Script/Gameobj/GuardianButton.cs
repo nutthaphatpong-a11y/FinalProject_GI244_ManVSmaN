@@ -17,11 +17,11 @@ public class GuardianButton : MonoBehaviour
 
     void Update()
     {
-        // 🔥 ปิดปุ่มถ้าเงินไม่พอ
+        // ปิดปุ่มถ้าเงินไม่พอ
         button.interactable = (GameManager.instance.money >= data.cost);
     }
 
-    // 👇 ใช้ตอนกดปุ่ม
+    // ใช้ตอนกดปุ่ม
     public void SelectGuardian()
     {
         placer.selectedGuardian = guardianPrefab;

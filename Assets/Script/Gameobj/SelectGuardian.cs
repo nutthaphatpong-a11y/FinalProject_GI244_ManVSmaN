@@ -11,45 +11,52 @@ public class SelectGuardian : MonoBehaviour
     public Color normalColor = Color.white;
     public Color selectedColor = Color.green;
 
-public void Select()
-{
-   // if (placer == null)
-//    {
-      //  Debug.LogError("ยังไม่ได้ใส่ Placer");
-       // return;
-    //}
+    private static SelectGuardian current;
 
-    // ถ้ากดปุ่มเดิมซ้ำ = ยกเลิก
-    if (placer.selectedGuardian == guardianPrefab)
+    public void Select()
     {
-        placer.selectedGuardian = null;
+        if (placer == null) return;
+
+        // ถ้ากดปุ่มเดิมซ้ำ = ยกเลิก
+        if (current == this)
+        {
+            placer.selectedGuardian = null;
+
+            if (buttonImage != null)
+                buttonImage.color = normalColor;
+
+            current = null;
+            return;
+        }
+
+        // ปิด remove mode
+        placer.isRemoveMode = false;
+
+        if (placer.removeButtonImage != null)
+            placer.removeButtonImage.color = Color.white;
+
+        // คืนสีปุ่มเก่า
+        if (current != null && current.buttonImage != null)
+        {
+            current.buttonImage.color = current.normalColor;
+        }
+
+        // เลือกปุ่มใหม่
+        placer.selectedGuardian = guardianPrefab;
 
         if (buttonImage != null)
+            buttonImage.color = selectedColor;
+
+        current = this;
+    }
+
+    public static void ClearSelection()
+    {
+        if (current != null && current.buttonImage != null)
         {
-            buttonImage.color = normalColor;
+            current.buttonImage.color = current.normalColor;
         }
 
-        return;
+        current = null;
     }
-
-    // reset สีทุกปุ่ม
-    SelectGuardian[] buttons =
-        FindObjectsByType<SelectGuardian>(FindObjectsSortMode.None);
-
-    foreach (SelectGuardian btn in buttons)
-    {
-        if (btn.buttonImage != null)
-        {
-            btn.buttonImage.color = btn.normalColor;
-        }
-    }
-
-    // เลือกตัวใหม่
-    placer.selectedGuardian = guardianPrefab;
-
-    if (buttonImage != null)
-    {
-        buttonImage.color = selectedColor;
-    }
-}
 }

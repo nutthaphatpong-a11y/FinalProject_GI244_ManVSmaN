@@ -103,6 +103,11 @@ public class Guardian : MonoBehaviour
 
     public void RemoveSelf()
     {
+
+    int refund = cost / 2;
+
+    GameManager.instance.AddMoney(refund);
+
         ClearTiles();
         Destroy(gameObject);
     }
