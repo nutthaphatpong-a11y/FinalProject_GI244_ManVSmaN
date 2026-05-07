@@ -4,6 +4,6 @@ public class Buttom : MonoBehaviour
 {
     public void PlayA()
     {
-        SceneManager.LoadScene("GamePlay");
+        SceneManager.LoadScene("GameSettings");
     }
 }
